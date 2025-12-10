@@ -1,0 +1,11 @@
+targets:
+  $default:
+    builders:
+      drift_dev:
+        options:
+          sql:
+            dialects:
+              - postgres
+      json_serializable:
+        options:
+          field_rename: snake

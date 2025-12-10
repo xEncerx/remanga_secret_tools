@@ -1,6 +1,6 @@
 {
     "name": "remanga_secret_tools",
-    "short_name": "remanga_secret_tools",
+    "short_name": "RST",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

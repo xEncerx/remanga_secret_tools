@@ -30,7 +30,7 @@ class PackBloc extends Bloc<PackEvent, PackState> {
   }
 
   Future<void> _onFetchPack(FetchPackEvent event, Emitter<PackState> emit) async {
-    if (state is! PackLoadedState){
+    if (state is! PackLoadedState) {
       emit(PackLoadingState());
     }
 
@@ -45,7 +45,7 @@ class PackBloc extends Bloc<PackEvent, PackState> {
         },
       );
     } catch (e, st) {
-      getIt<Talker>().error('[OnFetchPack] Error: $e', st);
+      getIt<Talker>().error('[OnFetchPack] Error: $e', e, st);
       emit(
         PackFailureState(
           ApiException.unknownError(),

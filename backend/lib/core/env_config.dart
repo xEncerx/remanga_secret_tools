@@ -4,9 +4,34 @@ import 'package:dotenv/dotenv.dart';
 class EnvConfig {
   static final _dotenv = DotEnv()..load();
 
+  /// The current environment flavor.
+  static EnvFlavor get flavor =>
+      EnvFlavor.fromString(_dotenv['FLAVOR'] ?? 'dev');
+
+  // === Site configuration. ===
+  /// The allowed origin for CORS.
+  static String get allowedOrigin {
+    final origin = _dotenv['ALLOWED_ORIGIN'];
+    if (flavor == EnvFlavor.development) {
+      // Allow wildcard in development for convenience.
+      return origin ?? '*';
+    } else {
+      if (origin == null || origin.trim().isEmpty || origin == '*') {
+        throw StateError(
+          'ALLOWED_ORIGIN must be set to a specific origin in production/staging environments. Wildcard "*" is not allowed.',
+        );
+      }
+      return origin;
+    }
+  }
+
   /// The API url of Remanga.
   static String get apiRemangaUrl =>
-      _dotenv['API_REMANGA_URL'] ?? 'http://api.remanga.org';
+      _dotenv['API_REMANGA_URL'] ?? 'https://api.remanga.org';
+
+  // === Logging configuration parameters. ===
+  /// The Sentry DSN for error tracking.
+  static String? get sentryDsn => _dotenv['SENTRY_DSN'];
 
   // === Database configuration parameters. ===
   /// The host of the database.
@@ -36,4 +61,29 @@ class EnvConfig {
 
   /// The database index for the Redis server.
   static int get redisDatabase => int.parse(_dotenv['REDIS_DATABASE'] ?? '0');
+}
+
+/// The different environment flavors.
+enum EnvFlavor {
+  /// Development environment.
+  development('dev'),
+
+  /// Staging environment.
+  staging('stage'),
+
+  /// Production environment.
+  production('prod');
+
+  const EnvFlavor(this.name);
+
+  /// The name of the flavor.
+  final String name;
+
+  /// Creates an [EnvFlavor] from a string.
+  static EnvFlavor fromString(String flavor) {
+    return EnvFlavor.values.firstWhere(
+      (e) => e.name == flavor,
+      orElse: () => EnvFlavor.development,
+    );
+  }
 }

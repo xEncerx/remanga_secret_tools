@@ -13,7 +13,9 @@ final getIt = GetIt.I;
 /// Sets up the dependencies for the application.
 Future<void> setupDependencies() async {
   // === Logger ===
-  final logger = Talker();
+  final logger = Talker(
+    observer: SentryTalkerObserver(),
+  );
 
   // === Bloc Observer ===
   Bloc.observer = TalkerBlocObserver(

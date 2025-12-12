@@ -1,24 +1,51 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:backend/core/core.dart';
 import 'package:backend/features/features.dart';
 import 'package:dart_frog/dart_frog.dart';
+import 'package:sentry/sentry.dart';
 
 /// Initializes dependencies before the server starts.
 Future<void> init(InternetAddress ip, int port) async {
-  await InjectionContainer.init();
-
-  await SchedulerManager.register(
-    PackScheduler(
-      packId: 10,
-      interval: const Duration(minutes: 1),
-    ),
-  );
-
-  ProcessSignal.sigint.watch().listen((_) async {
-    await SchedulerManager.stopAll();
-    await InjectionContainer.dispose();
+  await Sentry.init((options) {
+    options
+      ..dsn = EnvConfig.sentryDsn
+      ..environment = EnvConfig.flavor.name
+      ..tracesSampleRate = EnvConfig.flavor == EnvFlavor.production ? 0.2 : 1.0;
   });
+
+  await runZonedGuarded(
+    () async {
+      await InjectionContainer.init();
+
+      await SchedulerManager.register(
+        PackScheduler(
+          packId: 10,
+          interval: const Duration(minutes: 1),
+        ),
+      );
+
+      ProcessSignal.sigint.watch().listen((_) async {
+        await SchedulerManager.stopAll();
+        await InjectionContainer.dispose();
+        await Sentry.close();
+
+        exit(0);
+      });
+    },
+    (error, stackTrace) async {
+      await Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
+        hint: Hint.withMap({
+          'source': 'zone',
+          'type': 'unhandled',
+          'time': DateTime.now().toIso8601String(),
+        }),
+      );
+    },
+  );
 }
 
 /// Runs the Dart Frog server with custom configurations.

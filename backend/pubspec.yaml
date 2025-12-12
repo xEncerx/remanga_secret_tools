@@ -21,6 +21,7 @@ dependencies:
   postgres: ^3.5.9
   redis: ^4.0.0
   retrofit: ^4.9.1
+  sentry: ^9.8.0
   shelf_cors_headers: ^0.1.5
   shelf_limiter: ^2.0.1
   talker: ^5.1.3

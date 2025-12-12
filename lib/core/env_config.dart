@@ -12,7 +12,7 @@ class EnvConfig {
   /// Gets the API URL.
   static const String apiUrl = String.fromEnvironment(
     'API_URL',
-    defaultValue: 'http://localhost:8080/api/v1',
+    defaultValue: 'http://localhost:8080/api/v1/',
   );
 
   /// Gets the Remanga URL.

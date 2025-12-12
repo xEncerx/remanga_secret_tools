@@ -14,7 +14,9 @@ class InjectionContainer {
   /// Initializes the dependency injection container.
   static Future<void> init() async {
     // === Configure logger ===
-    final logger = Talker();
+    final logger = Talker(
+      observer: SentryTalkerObserver(),
+    );
 
     // === Configure database ===
     _database = AppDatabase(DatabaseConnection.create());
@@ -54,7 +56,6 @@ class InjectionContainer {
         () => PacksUseCases(
           restClient: restClient,
           packLocalDataSource: packLocalDataSource,
-          logger: logger,
         ),
       );
 

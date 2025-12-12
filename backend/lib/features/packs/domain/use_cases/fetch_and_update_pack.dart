@@ -1,7 +1,6 @@
 import 'package:backend/core/core.dart';
 import 'package:backend/features/features.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:talker/talker.dart';
 
 /// Use case for fetching a pack by its ID and updating the data if necessary.
 class FetchAndUpdatePack {
@@ -9,7 +8,6 @@ class FetchAndUpdatePack {
   FetchAndUpdatePack({
     required this.restClient,
     required this.packLocalDataSource,
-    required this.logger,
   });
 
   /// The REST client used to fetch pack data.
@@ -17,9 +15,6 @@ class FetchAndUpdatePack {
 
   /// The local data source for packs.
   final PackLocalDataSource packLocalDataSource;
-
-  /// The logger for logging messages.
-  final Talker logger;
 
   /// Fetches a pack by its ID and updates the pack data if necessary.
   Future<void> execute(int packId) async {
@@ -35,9 +30,9 @@ class FetchAndUpdatePack {
 
     packData.fold(
       (packError) =>
-          logger.error('Failed to fetch pack $packId: ${packError.detail}'),
+          throw Exception('Failed to fetch pack $packId: ${packError.detail}'),
       (pack) => packDetail.fold(
-        (detailError) => logger.error(
+        (detailError) => throw Exception(
           'Failed to fetch pack detail $packId: ${detailError.detail}',
         ),
         (detail) {
@@ -66,7 +61,5 @@ class FetchAndUpdatePack {
     }
 
     await packLocalDataSource.upsertPack(pack: pack, packHash: packHash);
-
-    logger.info('Pack with id ${pack.id} has been upserted.');
   }
 }

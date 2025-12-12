@@ -1,6 +1,5 @@
 import 'package:backend/core/core.dart';
 import 'package:backend/features/features.dart';
-import 'package:talker/talker.dart';
 
 /// A collection of use cases related to packs.
 class PacksUseCases {
@@ -8,7 +7,6 @@ class PacksUseCases {
   PacksUseCases({
     required this.restClient,
     required this.packLocalDataSource,
-    required this.logger,
   }) {
     _initializeUseCases();
   }
@@ -19,9 +17,6 @@ class PacksUseCases {
   /// The local data source for packs.
   final PackLocalDataSource packLocalDataSource;
 
-  /// The logger for logging messages.
-  final Talker logger;
-
   late final FetchAndUpdatePack _fetchAndUpdatePack;
   late final GetPackById _getPackById;
 
@@ -29,7 +24,6 @@ class PacksUseCases {
     _fetchAndUpdatePack = FetchAndUpdatePack(
       restClient: restClient,
       packLocalDataSource: packLocalDataSource,
-      logger: logger,
     );
     _getPackById = GetPackById(
       packLocalDataSource: packLocalDataSource,

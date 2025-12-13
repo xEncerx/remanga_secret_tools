@@ -2,7 +2,7 @@ name: remanga_secret_tools
 description: "A collection of unofficial tools and utilities that unlock hidden features and enhance the Remanga experience."
 publish_to: "none"
 
-version: 0.1.0
+version: 0.1.2
 
 environment:
   sdk: ^3.10.3
@@ -55,15 +55,15 @@ flutter:
   fonts:
     - family: Exo 2
       fonts:
-        - asset: assets/fonts/Exo2-Light.ttf
-          weight: 300
+        # - asset: assets/fonts/Exo2-Light.ttf
+        #   weight: 300
         - asset: assets/fonts/Exo2-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Exo2-Medium.ttf
-          weight: 500
+        # - asset: assets/fonts/Exo2-Medium.ttf
+        #   weight: 500
         - asset: assets/fonts/Exo2-SemiBold.ttf
           weight: 600
         - asset: assets/fonts/Exo2-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Exo2-ExtraBold.ttf
-          weight: 800
+        # - asset: assets/fonts/Exo2-ExtraBold.ttf
+        #   weight: 800

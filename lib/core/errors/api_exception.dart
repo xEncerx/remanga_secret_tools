@@ -25,7 +25,7 @@ abstract class ApiException with _$ApiException {
   factory ApiException.internalServerError() => const ApiException(
     statusCode: 500,
     errorCode: 'INTERNAL_SERVER_ERROR',
-    detail: 'Ошибка на стороне сервера... Жди и терпи.',
+    detail: 'Ошибка на стороне сервера...',
   );
 
   /// Creates an [ApiException] representing an unknown error.

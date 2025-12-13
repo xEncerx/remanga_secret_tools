@@ -22,7 +22,7 @@ abstract class CoverDTO with _$CoverDTO {
   /// Creates a [CoverDTO] from a JSON map.
   factory CoverDTO.fromJson(Map<String, dynamic> json) => _$CoverDTOFromJson(json);
 
-  static const Set<String> _videoExtensions = {'mp4', 'webm', 'gif'};
+  static const Set<String> _videoExtensions = {'mp4', 'webm'};
 
   /// Gets the best available cover URL, preferring high resolution.
   String? get url {

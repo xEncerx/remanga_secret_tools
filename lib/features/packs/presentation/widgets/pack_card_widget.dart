@@ -8,39 +8,44 @@ class PackCardWidget extends StatefulWidget {
   /// Creates a [PackCardWidget].
   const PackCardWidget({
     super.key,
-    required this.cardUrl,
+    required this.cardPath,
+    bool isAsset = false,
     this.onTap,
-    this.isVideo = false,
     this.handleOnHover = true,
-  });
+  }) : _isVideo = false,
+       _isAsset = isAsset;
 
   /// Creates a [PackCardWidget] for an image.
   const PackCardWidget.image({
     super.key,
-    required this.cardUrl,
+    required this.cardPath,
+    bool isAsset = false,
     this.onTap,
     this.handleOnHover = true,
-  }) : isVideo = false;
+  }) : _isVideo = false,
+       _isAsset = isAsset;
 
   /// Creates a [PackCardWidget] for a video.
   const PackCardWidget.video({
     super.key,
-    required this.cardUrl,
+    required this.cardPath,
+    bool isAsset = false,
     this.onTap,
     this.handleOnHover = true,
-  }) : isVideo = true;
+  }) : _isVideo = true,
+       _isAsset = isAsset;
 
-  /// The URL of the card image or video.
-  final String cardUrl;
+  /// The Path of the card image or video.
+  final String cardPath;
 
-  /// Indicates whether the card is a video.
-  final bool isVideo;
-
-  ///
+  /// Whether to handle hover effects.
   final bool handleOnHover;
 
   /// Callback when the card is tapped.
   final VoidCallback? onTap;
+
+  final bool _isAsset;
+  final bool _isVideo;
 
   static const Widget _errorImage = Image(image: AssetImage('assets/images/random-card.webp'));
 
@@ -48,54 +53,70 @@ class PackCardWidget extends StatefulWidget {
   State<PackCardWidget> createState() => _PackCardWidgetState();
 }
 
-class _PackCardWidgetState extends State<PackCardWidget> {
+class _PackCardWidgetState extends State<PackCardWidget> with SingleTickerProviderStateMixin {
   VideoPlayerController? _videoController;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
   bool _hasRenderError = false;
   bool _isHovered = false;
 
   @override
   void initState() {
-    if (widget.isVideo) {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+    _animation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    );
+
+    if (widget._isVideo) {
       _initializeVideo();
     }
-    super.initState();
   }
 
   @override
   void dispose() {
+    _animationController.dispose();
     _videoController?.removeListener(_videoErrorListener);
     _videoController?.dispose();
     super.dispose();
   }
 
   void _initializeVideo() {
-    _videoController =
-        VideoPlayerController.networkUrl(
-            Uri.parse(widget.cardUrl),
-          )
-          ..addListener(_videoErrorListener)
-          ..initialize().then(
-            (_) {
-              if (!mounted) return;
-
-              setState(() {});
-              _videoController?.setLooping(true);
-              _videoController?.setVolume(0.0);
-              _videoController?.play();
-            },
-            onError: (error) {
-              if (!mounted) return;
-
-              setState(() {
-                _hasRenderError = true;
-              });
-            },
+    _videoController = widget._isAsset
+        ? VideoPlayerController.asset(widget.cardPath)
+        : VideoPlayerController.networkUrl(
+            Uri.parse(widget.cardPath),
           );
+
+    _videoController!
+      ..addListener(_videoErrorListener)
+      ..initialize().then(
+        (_) {
+          if (!mounted) return;
+          setState(() {
+            _hasRenderError = false;
+          });
+          _videoController?.setLooping(true);
+          _videoController?.setVolume(0.0);
+          _videoController?.play();
+        },
+        onError: (error) {
+          if (!mounted) return;
+          setState(() {
+            _hasRenderError = true;
+          });
+        },
+      );
   }
 
   void _videoErrorListener() {
     if (_videoController?.value.hasError ?? false) {
-      if (!mounted) return;
+      if (!mounted || !_hasRenderError) return;
       setState(() {
         _hasRenderError = true;
       });
@@ -104,12 +125,29 @@ class _PackCardWidgetState extends State<PackCardWidget> {
 
   @override
   void didUpdateWidget(covariant PackCardWidget oldWidget) {
-    if (widget.isVideo && oldWidget.cardUrl != widget.cardUrl) {
+    super.didUpdateWidget(oldWidget);
+
+    final pathChanged = oldWidget.cardPath != widget.cardPath;
+    final sourceChanged = oldWidget._isAsset != widget._isAsset;
+    final typeChanged = oldWidget._isVideo != widget._isVideo;
+
+    if (typeChanged || (widget._isVideo && (pathChanged || sourceChanged))) {
       _videoController?.dispose();
       _hasRenderError = false;
       _initializeVideo();
     }
-    super.didUpdateWidget(oldWidget);
+  }
+
+  void _onHoverEnter() {
+    if (!widget.handleOnHover) return;
+    _isHovered = true;
+    _animationController.forward();
+  }
+
+  void _onHoverExit() {
+    if (!widget.handleOnHover) return;
+    _isHovered = false;
+    _animationController.reverse();
   }
 
   @override
@@ -117,38 +155,38 @@ class _PackCardWidgetState extends State<PackCardWidget> {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
 
-    return MouseRegion(
-      cursor: widget.onTap != null ? SystemMouseCursors.click : MouseCursor.defer,
-      onEnter: (_) => widget.handleOnHover ? setState(() => _isHovered = true) : null,
-      onExit: (_) => widget.handleOnHover ? setState(() => _isHovered = false) : null,
-      child: GestureDetector(
-        onTap: widget.onTap,
-        child: AnimatedPadding(
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeInOut,
-          padding: EdgeInsets.all(_isHovered ? 0 : 8.0),
-          child: TweenAnimationBuilder<double>(
-            tween: Tween<double>(begin: 0.0, end: _isHovered ? 1 : 0),
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeInOut,
-            builder: (_, value, child) => DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: _isHovered
-                    ? [
-                        BoxShadow(
-                          color: primaryColor.withValues(alpha: 0.3 * value),
-                          blurRadius: value * 10,
-                          spreadRadius: value,
-                        ),
-                      ]
-                    : [],
-              ),
-              child: RepaintBoundary(child: child),
-            ),
+    return RepaintBoundary(
+      child: MouseRegion(
+        cursor: widget.onTap != null ? SystemMouseCursors.click : MouseCursor.defer,
+        onEnter: (_) => _onHoverEnter(),
+        onExit: (_) => _onHoverExit(),
+        child: GestureDetector(
+          onTap: widget.onTap,
+          child: AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) {
+              return Padding(
+                padding: EdgeInsets.all(8.0 * (1 - _animation.value)),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: _isHovered
+                        ? [
+                            BoxShadow(
+                              color: primaryColor.withValues(alpha: 0.3 * _animation.value),
+                              blurRadius: _animation.value * 10,
+                              spreadRadius: _animation.value,
+                            ),
+                          ]
+                        : const [],
+                  ),
+                  child: child,
+                ),
+              );
+            },
             child: AspectRatio(
               aspectRatio: 2 / 3,
-              child: widget.isVideo ? _buildVideo(theme) : _buildImage(theme),
+              child: widget._isVideo ? _buildVideo(theme) : _buildImage(theme),
             ),
           ),
         ),
@@ -157,11 +195,15 @@ class _PackCardWidgetState extends State<PackCardWidget> {
   }
 
   Widget _buildImage(ThemeData theme) {
+    final ImageProvider image = widget._isAsset
+        ? AssetImage(widget.cardPath)
+        : NetworkImage(
+            widget.cardPath,
+            webHtmlElementStrategy: WebHtmlElementStrategy.prefer,
+          );
+
     return OctoImage(
-      image: NetworkImage(
-        widget.cardUrl,
-        webHtmlElementStrategy: WebHtmlElementStrategy.prefer,
-      ),
+      image: image,
       errorBuilder: (_, _, _) => PackCardWidget._errorImage,
       placeholderBuilder: (_) => _buildShimmer(theme),
     );
@@ -176,7 +218,6 @@ class _PackCardWidgetState extends State<PackCardWidget> {
     return Stack(
       children: [
         VideoPlayer(_videoController!),
-        // Invisible layer to handle clicks
         const Positioned.fill(
           child: ColoredBox(
             color: Colors.transparent,
@@ -197,7 +238,7 @@ class _PackCardWidgetState extends State<PackCardWidget> {
         highlightColor: Color.lerp(primaryColor, Colors.white, 0.1)!,
         period: const Duration(seconds: 1),
         child: ClipRRect(
-          borderRadius: BorderRadiusGeometry.circular(16),
+          borderRadius: BorderRadius.circular(16),
           child: ColoredBox(color: opacityColor),
         ),
       ),

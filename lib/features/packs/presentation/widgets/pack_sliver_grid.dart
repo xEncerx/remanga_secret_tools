@@ -35,12 +35,12 @@ class PackSliverGrid extends StatelessWidget {
               return card.cover.isVideo
                   ? PackCardWidget.video(
                       key: ValueKey(card.id),
-                      cardUrl: card.cover.url!,
+                      cardPath: card.cover.url!,
                       onTap: followLink,
                     )
                   : PackCardWidget.image(
                       key: ValueKey(card.id),
-                      cardUrl: card.cover.url!,
+                      cardPath: card.cover.url!,
                       onTap: followLink,
                     );
             },

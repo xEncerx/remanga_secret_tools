@@ -10,8 +10,20 @@ class EnvConfig {
 
   // === Site configuration. ===
   /// The allowed origin for CORS.
-  static String get allowedOrigin =>
-      _dotenv['ALLOWED_ORIGIN'] ?? '*';
+  static String get allowedOrigin {
+    final origin = _dotenv['ALLOWED_ORIGIN'];
+    if (flavor == EnvFlavor.development) {
+      // Allow wildcard in development for convenience.
+      return origin ?? '*';
+    } else {
+      if (origin == null || origin.trim().isEmpty || origin == '*') {
+        throw StateError(
+          'ALLOWED_ORIGIN must be set to a specific origin in production/staging environments. Wildcard "*" is not allowed.',
+        );
+      }
+      return origin;
+    }
+  }
 
   /// The API url of Remanga.
   static String get apiRemangaUrl =>

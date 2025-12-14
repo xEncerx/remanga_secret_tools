@@ -33,8 +33,9 @@ class PackBuyButton extends StatelessWidget {
           ).copyWith(right: 10),
         ),
         label: Text(
-          'Цена: $cost',
-          maxLines: 1,
+          cost.toString(),
+          maxLines: 2,
+          textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
         ),
         icon: const Icon(

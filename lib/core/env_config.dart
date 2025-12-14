@@ -15,6 +15,9 @@ class EnvConfig {
     defaultValue: 'http://localhost:8080/api/v1/',
   );
 
+  /// Gets the CORS proxy URL.
+  static const String corsProxy = String.fromEnvironment('CORS_PROXY');
+
   /// Gets the Remanga URL.
   static const String remangaUrl = String.fromEnvironment(
     'REMANGA_URL',

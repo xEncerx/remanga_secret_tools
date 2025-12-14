@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/core.dart';
 import '../../../../shared/shared.dart';
@@ -57,24 +58,29 @@ class PackScreen extends StatelessWidget implements AutoRouteWrapper {
                       style: theme.textTheme.headlineSmall.bold,
                     ),
                   ),
-                  leadingWidth: 120,
-                  leading: const Row(
-                    children: [
-                      LinkSvgCircleButton(
-                        url: EnvConfig.authorRemanga,
-                        svgAssetPath: 'assets/svgs/yin-yang.svg',
-                        tooltip: 'Remanga автора',
-                      ),
-                      LinkSvgCircleButton(
-                        url: EnvConfig.githubRepo,
-                        svgAssetPath: 'assets/svgs/github.svg',
-                        tooltip: 'Репозиторий на GitHub',
-                      ),
-                    ],
-                  ),
+                  leading: const ThemeSwitcherButton(),
                   actionsPadding: const EdgeInsets.only(right: 8),
-                  actions: const [
-                    ThemeSwitcherButton(),
+                  actions: [
+                    AuthorPopupMenuButton(
+                      links: [
+                        SocialLinkData(
+                          label: 'Remanga автора',
+                          url: EnvConfig.authorRemanga,
+                          icon: SvgPicture.asset(
+                            'assets/svgs/yin-yang.svg',
+                            color: theme.colorScheme.onSurface,
+                          ),
+                        ),
+                        SocialLinkData(
+                          label: 'Репозиторий',
+                          url: EnvConfig.githubRepo,
+                          icon: SvgPicture.asset(
+                            'assets/svgs/github.svg',
+                            color: theme.colorScheme.onSurface,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
                 SliverToBoxAdapter(
@@ -82,6 +88,7 @@ class PackScreen extends StatelessWidget implements AutoRouteWrapper {
                 ),
                 SliverToBoxAdapter(
                   child: Row(
+                    spacing: 5,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Flexible(
@@ -110,7 +117,7 @@ class PackScreen extends StatelessWidget implements AutoRouteWrapper {
                   ),
                 ),
                 SliverPadding(
-                  padding: const EdgeInsetsGeometry.symmetric(horizontal: 40),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   sliver: PackSliverGrid(cards: state.packData.cards),
                 ),
               ],

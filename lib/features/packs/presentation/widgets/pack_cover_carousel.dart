@@ -15,8 +15,9 @@ class PackCoverCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget cachedCard = PackCardWidget.image(
-      cardUrl: packCover,
+    const Widget cachedCard = PackCardWidget.image(
+      cardPath: 'assets/images/random-card.webp',
+      isAsset: true,
       handleOnHover: false,
     );
     final backgroundColor = Theme.of(context).scaffoldBackgroundColor;

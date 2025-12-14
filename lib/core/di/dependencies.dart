@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:talker/talker.dart';
@@ -15,6 +16,10 @@ Future<void> setupDependencies() async {
   // === Logger ===
   final logger = Talker(
     observer: SentryTalkerObserver(),
+    settings: TalkerSettings(
+      // ignore: avoid_redundant_argument_values
+      useConsoleLogs: kDebugMode,
+    )
   );
 
   // === Bloc Observer ===

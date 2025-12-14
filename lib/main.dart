@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -18,7 +19,8 @@ Future<void> main() async {
           options
             ..dsn = EnvConfig.sentryDsn
             ..environment = EnvConfig.flavor.name
-            ..debug = false
+            ..debug = kDebugMode
+            ..sendDefaultPii = true
             ..tracesSampleRate = EnvConfig.flavor == EnvFlavor.production ? 0.2 : 1.0;
         },
       );
@@ -32,7 +34,7 @@ Future<void> main() async {
       await setupDependencies();
 
       // Preload SVG assets
-      await preloadSVGs([
+      preloadSVGs([
         'assets/svgs/github.svg',
         'assets/svgs/yin-yang.svg',
       ]);

@@ -30,10 +30,12 @@ flutter run -d chrome --dart-define-from-file=.env
 
 ### 3. Сборка (Release)
 
-Проект собирается в Web-версию с поддержкой WASM для максимальной производительности:
+Для сборки WEB-приложения воспользуйтесь командой:
 
 ```bash
-flutter build web --release --wasm --dart-define-from-file=.env
+flutter build web --release --no-wasm-dry-run --pwa-strategy=none --dart-define-from-file=.env
 ```
 
 Результат сборки будет находиться в директории `build/web`.
+
+Для деплоя можно удалить папку canvaskit.

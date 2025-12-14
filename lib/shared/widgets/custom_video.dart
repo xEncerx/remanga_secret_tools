@@ -39,10 +39,10 @@ class CustomVideo extends StatefulWidget {
   /// Whether to bypass CORS using a proxy.
   final bool bypassCORS;
 
-  /// A widget to display while the image is loading.
+  /// A widget to display while the video is loading.
   final Widget? placeholder;
 
-  /// A widget to display if an error occurs while loading the image.
+  /// A widget to display if an error occurs while loading the video.
   final Widget? errorWidget;
 
   static const _errorWidget = Image(image: AssetImage('assets/images/error-cover.webp'));

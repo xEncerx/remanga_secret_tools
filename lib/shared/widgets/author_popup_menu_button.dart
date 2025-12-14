@@ -47,7 +47,7 @@ class AuthorPopupMenuButton extends StatelessWidget {
                   },
                   child: ListTile(
                     visualDensity: VisualDensity.compact,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                     leading: SizedBox(
                       width: 24,
                       height: 24,

@@ -88,6 +88,7 @@ class PackScreen extends StatelessWidget implements AutoRouteWrapper {
                 ),
                 SliverToBoxAdapter(
                   child: Row(
+                    spacing: 5,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Flexible(

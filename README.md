@@ -14,6 +14,7 @@
 
 ### 1. Настройка окружения
 
+#### 1.1 Настройка конфигурации
 В корне проекта создайте файл `.env`, используя пример конфигурации:
 
 ```bash
@@ -22,13 +23,19 @@ cp .env.example .env
 
 Заполните `.env` актуальными данными (URL бэкенда, ссылки и прочее).
 
-### 2. Запуск в режиме разработки
+#### 1.2 Скачивание зависимостей
 
 ```bash
-flutter run -d chrome --dart-define-from-file=.env
+flutter pub get
 ```
 
-### 3. Сборка (Release)
+#### 1.3 Генерация файлов
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+### 2. Сборка (Release)
 
 Для сборки WEB-приложения воспользуйтесь командой:
 
@@ -38,4 +45,4 @@ flutter build web --release --no-wasm-dry-run --pwa-strategy=none --dart-define-
 
 Результат сборки будет находиться в директории `build/web`.
 
-Для деплоя можно удалить папку canvaskit.
+Для деплоя можно удалить папку canvaskit из `build/web`.

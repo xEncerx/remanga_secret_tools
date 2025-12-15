@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dotenv/dotenv.dart';
 
 /// A class to manage environment configurations using dotenv.
@@ -17,9 +19,11 @@ class EnvConfig {
       return origin ?? '*';
     } else {
       if (origin == null || origin.trim().isEmpty || origin == '*') {
-        throw StateError(
+        final error = StateError(
           'ALLOWED_ORIGIN must be set to a specific origin in production/staging environments. Wildcard "*" is not allowed.',
         );
+        stderr.writeln('[ERROR] $error');
+        throw error;
       }
       return origin;
     }

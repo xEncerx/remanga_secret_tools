@@ -22,7 +22,7 @@ Future<void> init(InternetAddress ip, int port) async {
       await SchedulerManager.register(
         PackScheduler(
           packId: 10,
-          interval: const Duration(minutes: 1),
+          interval: const Duration(seconds: 30),
         ),
       );
 
@@ -30,8 +30,6 @@ Future<void> init(InternetAddress ip, int port) async {
         await SchedulerManager.stopAll();
         await InjectionContainer.dispose();
         await Sentry.close();
-
-        exit(0);
       });
     },
     (error, stackTrace) async {

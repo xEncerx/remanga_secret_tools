@@ -15,6 +15,15 @@ class InjectionContainer {
   static Future<void> init() async {
     // === Configure logger ===
     final logger = Talker(
+      logger: TalkerLogger(
+        formatter: const ColoredLoggerFormatter(),
+        settings: TalkerLoggerSettings(
+          enableColors: EnvConfig.flavor == EnvFlavor.development,
+          level: EnvConfig.flavor == EnvFlavor.development
+              ? LogLevel.verbose
+              : LogLevel.warning,
+        ),
+      ),
       observer: SentryTalkerObserver(),
     );
 

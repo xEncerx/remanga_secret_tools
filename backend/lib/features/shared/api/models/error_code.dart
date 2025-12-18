@@ -18,6 +18,9 @@ enum ErrorCode {
   /// Service unavailable
   serviceUnavailable('SERVICE_UNAVAILABLE'),
 
+  /// Method not allowed
+  methodNotAllowed('METHOD_NOT_ALLOWED'),
+
   // Pack-specific
   /// Pack not found
   packNotFound('PACK_NOT_FOUND');

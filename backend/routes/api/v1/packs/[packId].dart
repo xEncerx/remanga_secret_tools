@@ -7,6 +7,10 @@ Future<Response> onRequest(
   RequestContext context,
   String packId,
 ) async {
+  if (context.request.method != HttpMethod.get) {
+    return MethodNotAllowedResponse.create().toResponse();
+  }
+
   final parsedPackId = int.tryParse(packId);
   if (parsedPackId == null) {
     return ValidationErrorResponse.create(

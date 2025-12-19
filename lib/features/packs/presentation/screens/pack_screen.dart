@@ -83,8 +83,8 @@ class PackScreen extends StatelessWidget implements AutoRouteWrapper {
                     ),
                   ],
                 ),
-                SliverToBoxAdapter(
-                  child: PackCoverCarousel(packCover: state.packData.cover.url ?? ''),
+                const SliverToBoxAdapter(
+                  child: PackCoverCarousel(),
                 ),
                 SliverToBoxAdapter(
                   child: Row(

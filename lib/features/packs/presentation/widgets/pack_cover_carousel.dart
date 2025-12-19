@@ -5,13 +5,7 @@ import 'widgets.dart';
 /// A carousel widget that displays multiple copies of a pack cover image
 class PackCoverCarousel extends StatelessWidget {
   /// Creates a [PackCoverCarousel].
-  const PackCoverCarousel({
-    super.key,
-    required this.packCover,
-  });
-
-  /// Pack cover url
-  final String packCover;
+  const PackCoverCarousel({super.key});
 
   @override
   Widget build(BuildContext context) {

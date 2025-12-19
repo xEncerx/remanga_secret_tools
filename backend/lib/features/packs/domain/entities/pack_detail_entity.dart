@@ -11,7 +11,7 @@ abstract class PackDetailEntity with _$PackDetailEntity {
     required int id,
     required int cost,
     required String dir,
-    required int? amount,
+    @Default(-1) int amount,
   }) = _PackDetailEntity;
 
   /// Creates a [PackDetailEntity] from a JSON map.

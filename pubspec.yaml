@@ -2,10 +2,10 @@ name: remanga_secret_tools
 description: "A collection of unofficial tools and utilities that unlock hidden features and enhance the Remanga experience."
 publish_to: "none"
 
-version: 0.1.3
+version: 0.1.4
 
 environment:
-  sdk: ^3.10.3
+  sdk: ">=3.9.0 <4.0.0"
 
 dependencies:
   flutter:

@@ -18,6 +18,9 @@ class EnvConfig {
   /// Gets the CORS proxy URL.
   static const String corsProxy = String.fromEnvironment('CORS_PROXY');
 
+  /// Gets the media base URL.
+  static const String mediaBaseUrl = String.fromEnvironment('MEDIA_BASE_URL');
+
   /// Gets the Remanga URL.
   static const String remangaUrl = String.fromEnvironment(
     'REMANGA_URL',

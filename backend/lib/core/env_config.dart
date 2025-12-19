@@ -10,6 +10,18 @@ class EnvConfig {
   static EnvFlavor get flavor =>
       EnvFlavor.fromString(_dotenv['FLAVOR'] ?? 'dev');
 
+  // === Path configuration. ===
+  /// The root directory for media files.
+  static String get mediaRoot => _dotenv['MEDIA_ROOT'] ?? '/var/www/rst-media/';
+
+  /// The path for storing card covers.
+  static String get apiCardsCoverPath =>
+      _dotenv['API_CARDS_COVER_PATH'] ?? '/media/cards/';
+
+  /// The path for storing error covers.
+  static String get apiErrorCoverPath =>
+      _dotenv['API_ERROR_COVER_PATH'] ?? '/media/cards/error.webp';
+
   // === Site configuration. ===
   /// The allowed origin for CORS.
   static String get allowedOrigin {

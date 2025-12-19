@@ -145,6 +145,8 @@ class _PackCardWidgetState extends State<PackCardWidget> with SingleTickerProvid
             imagePath: widget.cardPath,
             placeholder: (_, _) => _buildShimmer(theme),
             errorWidget: (_, _, _) => PackCardWidget._errorImage,
+            // Now we don't need to bypass CORS for pack cards because we get them from our own server.
+            bypassCORS: false,
           );
   }
 
@@ -159,6 +161,8 @@ class _PackCardWidgetState extends State<PackCardWidget> with SingleTickerProvid
             videoPath: widget.cardPath,
             placeholder: _buildShimmer(theme),
             errorWidget: PackCardWidget._errorImage,
+            // Now we don't need to bypass CORS for pack cards because we get them from our own server.
+            bypassCORS: false,
           );
   }
 

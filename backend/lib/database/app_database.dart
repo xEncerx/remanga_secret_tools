@@ -1,3 +1,4 @@
+import 'package:backend/database/database.dart';
 import 'package:backend/features/features.dart';
 import 'package:drift/drift.dart';
 import 'package:drift_postgres/drift_postgres.dart';
@@ -5,7 +6,7 @@ import 'package:drift_postgres/drift_postgres.dart';
 part 'app_database.g.dart';
 
 /// The main application database class using Drift.
-@DriftDatabase(tables: [Packs])
+@DriftDatabase(tables: [PacksDbModel, PackCardsDbModel, CardsDbModel])
 class AppDatabase extends _$AppDatabase {
   /// Creates an instance of [AppDatabase] with the given [QueryExecutor].
   AppDatabase(super.e);

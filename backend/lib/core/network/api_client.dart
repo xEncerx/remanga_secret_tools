@@ -37,8 +37,6 @@ class ApiClient {
               'Cache-Control': 'no-cache',
               'Pragma': 'no-cache',
               'Priority': 'u=0, i',
-              'Sec-Ch-Ua':
-                  '"Microsoft Edge";v="143", "Chromium";v="143", "Not A(Brand";v="24"',
               'Sec-Ch-Ua-Mobile': '?0',
               'Sec-Ch-Ua-Platform': '"Windows"',
               'Sec-Fetch-Dest': 'document',

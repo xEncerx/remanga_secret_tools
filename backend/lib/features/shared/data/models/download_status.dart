@@ -9,6 +9,6 @@ enum DownloadStatus {
   /// The download is complete.
   downloaded,
 
-  /// The download has been paused.
+  /// The download has failed.
   failure,
 }

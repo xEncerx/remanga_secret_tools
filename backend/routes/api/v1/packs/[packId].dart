@@ -19,7 +19,7 @@ Future<Response> onRequest(
   }
 
   try {
-    final pack = await getIt<PacksUseCases>().getPackById(parsedPackId);
+    final pack = await getIt<GetPackUseCase>().execute(parsedPackId);
 
     if (pack == null) {
       return PackNotFoundResponse.create(packId).toResponse();

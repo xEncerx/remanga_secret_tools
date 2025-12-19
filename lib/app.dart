@@ -21,6 +21,7 @@ class MainApp extends StatelessWidget {
         builder: (context, state) => MaterialApp.router(
           title: 'Oreshki',
           themeMode: state.themeMode,
+          scrollBehavior: NoOverscrollBehavior(),
           theme: AppTheme.lightTheme(),
           darkTheme: AppTheme.darkTheme(),
           routerConfig: getIt<AppRouter>().config(),
@@ -28,5 +29,13 @@ class MainApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// A custom scroll behavior that disables overscroll indicators.
+class NoOverscrollBehavior extends MaterialScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
   }
 }

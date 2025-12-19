@@ -32,7 +32,7 @@ abstract class CoverDTO with _$CoverDTO {
     if (url.startsWith('http://') || url.startsWith('https://')) {
       return url;
     } else {
-      return '${EnvConfig.remangaUrl}$url';
+      return '${EnvConfig.mediaBaseUrl}$url';
     }
   }
 

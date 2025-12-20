@@ -36,6 +36,5 @@ abstract class CardDTO with _$CardDTO {
   }) = _CoverDTO;
 
   /// Creates a [CardDTO] from a JSON map.
-  factory CardDTO.fromJson(Map<String, dynamic> json) =>
-      _$CoverDTOFromJson(json);
+  factory CardDTO.fromJson(Map<String, dynamic> json) => _$CoverDTOFromJson(json);
 }

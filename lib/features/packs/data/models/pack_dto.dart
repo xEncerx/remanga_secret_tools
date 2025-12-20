@@ -45,6 +45,5 @@ abstract class PackDTO with _$PackDTO {
   }) = _PackDTO;
 
   /// Creates a [PackDTO] from a JSON map.
-  factory PackDTO.fromJson(Map<String, dynamic> json) =>
-      _$PackDTOFromJson(json);
+  factory PackDTO.fromJson(Map<String, dynamic> json) => _$PackDTOFromJson(json);
 }

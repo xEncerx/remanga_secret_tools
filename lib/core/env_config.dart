@@ -54,8 +54,7 @@ enum EnvFlavor {
   staging('stage'),
 
   /// Production environment.
-  production('prod')
-  ;
+  production('prod');
 
   const EnvFlavor(this.name);
 

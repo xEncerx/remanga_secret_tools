@@ -19,7 +19,7 @@ Future<void> setupDependencies() async {
     settings: TalkerSettings(
       // ignore: avoid_redundant_argument_values
       useConsoleLogs: kDebugMode,
-    )
+    ),
   );
 
   // === Bloc Observer ===

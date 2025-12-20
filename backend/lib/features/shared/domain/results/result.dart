@@ -27,8 +27,9 @@ sealed class Result<T> with _$Result<T> {
   T getOrThrow() {
     return switch (this) {
       ResultSuccess(value: final v) => v,
-      ResultFailure(message: final msg) => 
-        throw Exception('Result failed: $msg'),
+      ResultFailure(message: final msg) => throw Exception(
+        'Result failed: $msg',
+      ),
     };
   }
 
@@ -44,7 +45,7 @@ sealed class Result<T> with _$Result<T> {
   Result<R> map<R>(R Function(T value) transform) {
     return switch (this) {
       ResultSuccess(value: final v) => Result.success(transform(v)),
-      ResultFailure(:final message, :final exception, :final stackTrace) => 
+      ResultFailure(:final message, :final exception, :final stackTrace) =>
         Result.failure(
           message: message,
           exception: exception,

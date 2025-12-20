@@ -21,7 +21,7 @@ class JsonBTypeConverter<T> extends TypeConverter<T, Object> {
     if (fromDb is String) {
       return fromJson(jsonDecode(fromDb) as Map<String, dynamic>);
     }
-    
+
     throw ArgumentError('Unexpected type: ${fromDb.runtimeType}');
   }
 

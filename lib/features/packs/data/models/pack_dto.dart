@@ -23,16 +23,13 @@ abstract class PackDTO with _$PackDTO {
     required String dir,
 
     /// Amount associated with the pack, if any.
-    required int? amount,
+    required int amount,
 
     /// Description of the pack.
     required String description,
 
     /// Level information of the pack.
     required PackLevelDTO level,
-
-    /// [CoverDTO] representing the pack's cover images.
-    required CoverDTO cover,
 
     /// Indicates if the pack is currently active.
     required bool isActive,
@@ -48,6 +45,5 @@ abstract class PackDTO with _$PackDTO {
   }) = _PackDTO;
 
   /// Creates a [PackDTO] from a JSON map.
-  factory PackDTO.fromJson(Map<String, dynamic> json) =>
-      _$PackDTOFromJson(json);
+  factory PackDTO.fromJson(Map<String, dynamic> json) => _$PackDTOFromJson(json);
 }

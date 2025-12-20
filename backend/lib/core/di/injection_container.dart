@@ -15,6 +15,15 @@ class InjectionContainer {
   static Future<void> init() async {
     // === Configure logger ===
     final logger = Talker(
+      logger: TalkerLogger(
+        formatter: const ColoredLoggerFormatter(),
+        settings: TalkerLoggerSettings(
+          enableColors: EnvConfig.flavor == EnvFlavor.development,
+          level: EnvConfig.flavor == EnvFlavor.development
+              ? LogLevel.verbose
+              : LogLevel.warning,
+        ),
+      ),
       observer: SentryTalkerObserver(),
     );
 
@@ -29,9 +38,6 @@ class InjectionContainer {
       ).createClient(),
     );
 
-    // === Configure data sources ===
-    final packLocalDataSource = PackLocalDataSourceImpl(_database);
-
     // === Cache service with Redis and In-Memory fallback ===
     final cacheService = await CacheFactory.createRedisWithFallback(
       host: EnvConfig.redisHost,
@@ -45,18 +51,45 @@ class InjectionContainer {
       },
     );
 
-    // === Register dependencies ===
+    // === Repositories ===
+    final packRepo = PackRepositoryImpl(_database);
+    final cardRepo = CardRepositoryImpl(_database);
+
     getIt
+      ..registerSingleton<PackRepository>(packRepo)
+      ..registerSingleton<CardRepository>(cardRepo)
+      // === Services ===
       ..registerSingleton<Talker>(logger)
       ..registerSingleton<RestClient>(restClient)
-      ..registerSingleton<PackLocalDataSource>(packLocalDataSource)
       ..registerSingleton<CacheService>(cacheService)
       // === Use cases ===
-      ..registerLazySingleton(
-        () => PacksUseCases(
+      ..registerSingleton<SyncPackUseCase>(
+        SyncPackUseCase(
           restClient: restClient,
-          packLocalDataSource: packLocalDataSource,
+          packRepository: packRepo,
+          cardRepository: cardRepo,
+          packHashGenerator: PackHashGenerator(),
         ),
+      )
+      ..registerSingleton<DownloadCardCoverUseCase>(
+        DownloadCardCoverUseCase(
+          dio: ApiClient(
+            baseUrl: EnvConfig.apiRemangaUrl,
+            logger: logger,
+          ).createClient(),
+          cardRepository: cardRepo,
+          fileStorage: LocalFileStorage(basePath: EnvConfig.mediaRoot),
+        ),
+      )
+      ..registerSingleton<ProcessPendingDownloadsUseCase>(
+        ProcessPendingDownloadsUseCase(
+          cardRepository: cardRepo,
+          downloadCardCoverUseCase: getIt<DownloadCardCoverUseCase>(),
+          maxConcurrent: 5,
+        ),
+      )
+      ..registerSingleton<GetPackUseCase>(
+        GetPackUseCase(packRepo),
       );
 
     logger.info('Dependency injection container initialized.');

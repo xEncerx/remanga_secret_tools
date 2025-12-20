@@ -10,8 +10,10 @@ abstract class PackLevelEntity with _$PackLevelEntity {
   const factory PackLevelEntity({
     /// Unique identifier for the pack level.
     required int id,
+
     /// Name of the pack level.
     required String name,
+
     /// Description of the pack level.
     required String description,
   }) = _PackLevelEntity;

@@ -21,9 +21,6 @@ abstract class PackEntity with _$PackEntity {
     /// Level information of the pack.
     required PackLevelEntity level,
 
-    /// [CoverEntity] representing the pack's cover images.
-    required CoverEntity cover,
-
     /// Indicates if the pack is currently active.
     required bool isActive,
 
@@ -43,7 +40,7 @@ abstract class PackEntity with _$PackEntity {
     @Default('') String dir,
 
     /// Amount associated with the pack, if any.
-    @Default(null) int? amount,
+    @Default(-1) int amount,
   }) = _PackEntity;
 
   /// Creates a [PackEntity] from a JSON map.

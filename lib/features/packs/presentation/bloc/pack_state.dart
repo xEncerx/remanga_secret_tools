@@ -14,7 +14,7 @@ final class PackLoadingState extends PackState {}
 
 /// State representing that the pack has been successfully loaded.
 final class PackLoadedState extends PackState {
-  /// 
+  ///
   PackLoadedState(this.packData);
 
   /// The loaded pack data.

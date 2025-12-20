@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dotenv/dotenv.dart';
 
 /// A class to manage environment configurations using dotenv.
@@ -8,6 +10,18 @@ class EnvConfig {
   static EnvFlavor get flavor =>
       EnvFlavor.fromString(_dotenv['FLAVOR'] ?? 'dev');
 
+  // === Path configuration. ===
+  /// The root directory for media files.
+  static String get mediaRoot => _dotenv['MEDIA_ROOT'] ?? '/var/www/rst-media/';
+
+  /// The path for storing card covers.
+  static String get apiCardsCoverPath =>
+      _dotenv['API_CARDS_COVER_PATH'] ?? '/media/cards/';
+
+  /// The path for storing error covers.
+  static String get apiErrorCoverPath =>
+      _dotenv['API_ERROR_COVER_PATH'] ?? '/media/cards/error.webp';
+
   // === Site configuration. ===
   /// The allowed origin for CORS.
   static String get allowedOrigin {
@@ -17,9 +31,11 @@ class EnvConfig {
       return origin ?? '*';
     } else {
       if (origin == null || origin.trim().isEmpty || origin == '*') {
-        throw StateError(
+        final error = StateError(
           'ALLOWED_ORIGIN must be set to a specific origin in production/staging environments. Wildcard "*" is not allowed.',
         );
+        stderr.writeln('[ERROR] $error');
+        throw error;
       }
       return origin;
     }

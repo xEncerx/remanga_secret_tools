@@ -20,9 +20,17 @@ Future<void> init(InternetAddress ip, int port) async {
       await InjectionContainer.init();
 
       await SchedulerManager.register(
-        PackScheduler(
+        PackSyncScheduler(
           packId: 10,
-          interval: const Duration(minutes: 1),
+          syncPackUseCase: getIt<SyncPackUseCase>(),
+          interval: const Duration(seconds: 30),
+        ),
+      );
+      await SchedulerManager.register(
+        CardCoverDownloaderScheduler(
+          processPendingDownloadsUseCase:
+              getIt<ProcessPendingDownloadsUseCase>(),
+          interval: const Duration(seconds: 15),
         ),
       );
 
@@ -30,8 +38,6 @@ Future<void> init(InternetAddress ip, int port) async {
         await SchedulerManager.stopAll();
         await InjectionContainer.dispose();
         await Sentry.close();
-
-        exit(0);
       });
     },
     (error, stackTrace) async {

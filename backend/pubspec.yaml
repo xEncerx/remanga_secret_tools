@@ -1,6 +1,6 @@
 name: backend
 description: Backend service for Remanga Secret Tools, aggregating data and powering unofficial features for the Remanga ecosystem.
-version: 0.1.0
+version: 0.2.0
 publish_to: none
 
 environment:
@@ -16,8 +16,10 @@ dependencies:
   fpdart: ^1.2.0
   freezed_annotation: ^3.1.0
   get_it: ^9.2.0
+  html_unescape: ^2.0.0
   json_annotation: ^4.9.0
   meta: ^1.17.0
+  path: ^1.9.1
   postgres: ^3.5.9
   redis: ^4.0.0
   retrofit: ^4.9.1

@@ -10,6 +10,7 @@ abstract class PackRankGuarantorsDTO with _$PackRankGuarantorsDTO {
   const factory PackRankGuarantorsDTO({
     /// Number of rank A guarantors.
     required int rankA,
+
     /// Number of rank S guarantors.
     required int rankS,
   }) = _PackRankGuarantorsDTO;
@@ -21,13 +22,15 @@ abstract class PackRankGuarantorsDTO with _$PackRankGuarantorsDTO {
 
 /// DTO representing pack guarantors with various attributes.
 @freezed
-abstract class PackGuarantorsDTO with _$PackGuarantorsDTO{
+abstract class PackGuarantorsDTO with _$PackGuarantorsDTO {
   /// Factory constructor for [PackGuarantorsDTO].
   const factory PackGuarantorsDTO({
     /// Unique identifier for the pack guarantors.
     required int id,
+
     /// Name of the pack guarantors.
     required String name,
+
     /// [PackRankGuarantorsDTO] representing the rank guarantors.
     required PackRankGuarantorsDTO guarantors,
   }) = _PackGuarantorsDTO;

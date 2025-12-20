@@ -7,6 +7,8 @@ services:
       - .env
     depends_on:
       - redis
+    volumes:
+      - ${MEDIA_ROOT:-./media}:/var/www/rst-media
 
   redis:
     image: redis:alpine

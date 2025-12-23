@@ -40,7 +40,7 @@ dart run build_runner build --delete-conflicting-outputs
 Для сборки WEB-приложения воспользуйтесь командой:
 
 ```bash
-flutter build web --release --no-wasm-dry-run --pwa-strategy=none --dart-define-from-file=.env
+flutter build web --release --no-wasm-dry-run --dart-define-from-file=.env
 ```
 
 Результат сборки будет находиться в директории `build/web`.

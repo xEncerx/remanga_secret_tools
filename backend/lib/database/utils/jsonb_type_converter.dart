@@ -26,5 +26,5 @@ class JsonBTypeConverter<T> extends TypeConverter<T, Object> {
   }
 
   @override
-  Object toSql(T value) => json.encode(toJson(value));
+  Object toSql(T value) => toJson(value);
 }

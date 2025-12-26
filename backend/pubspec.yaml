@@ -1,6 +1,6 @@
 name: backend
 description: Backend service for Remanga Secret Tools, aggregating data and powering unofficial features for the Remanga ecosystem.
-version: 0.2.1
+version: 0.3.0
 publish_to: none
 
 environment:

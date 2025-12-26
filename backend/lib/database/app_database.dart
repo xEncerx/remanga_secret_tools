@@ -24,6 +24,7 @@ class AppDatabase extends _$AppDatabase {
           'CREATE INDEX IF NOT EXISTS idx_cards_rank ON cards(rank)',
         );
         await customStatement(
+          // ignore: lines_longer_than_80_chars
           'CREATE INDEX IF NOT EXISTS idx_cards_encounter_count ON cards USING GIN (encounter_count)',
         );
       },

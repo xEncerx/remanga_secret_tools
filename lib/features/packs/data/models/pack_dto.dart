@@ -40,6 +40,9 @@ abstract class PackDTO with _$PackDTO {
     /// [PackGuarantorsDTO] representing the pack's guarantors.
     required PackGuarantorsDTO guarantors,
 
+    /// [PackRankCountsDto] representing the counts of different card ranks in the pack.
+    required PackRankCountsDTO packRankCounts,
+
     /// List of [CardDTO] representing the cards in the pack.
     required List<CardDTO> cards,
   }) = _PackDTO;

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/link.dart';
 
 import '../../../../core/core.dart';
+import '../../../../shared/shared.dart';
 import '../../../features.dart';
 
 /// A grid view displaying a list of pack cards.
 class PackSliverGrid extends StatelessWidget {
   /// Creates a [PackSliverGrid] widget.
-  const PackSliverGrid({super.key, required this.cards});
+  const PackSliverGrid({super.key, required this.pack});
 
-  /// The list of cards to display.
-  final List<CardDTO> cards;
+  /// Pack data containing the cards to display.
+  final PackDTO pack;
 
   @override
   Widget build(BuildContext context) {
@@ -20,31 +20,30 @@ class PackSliverGrid extends StatelessWidget {
         childAspectRatio: 2 / 3,
       ),
       delegate: SliverChildBuilderDelegate(
-        childCount: cards.length,
+        childCount: pack.cards.length,
         (context, index) {
-          final card = cards[index];
+          final card = pack.cards[index];
+          final cardRankCount = (pack.packRankCounts.toJson()[card.rank] as int?) ?? 0;
 
-          if (card.cover.url == null) return const SizedBox.shrink();
-
-          final cardUri = Uri.parse('${EnvConfig.remangaUrl}card/${card.id}');
-
-          return Link(
-            uri: cardUri,
-            target: LinkTarget.blank,
-            builder: (context, followLink) {
-              return card.cover.isVideo
-                  ? PackCardWidget.video(
-                      key: ValueKey(card.id),
-                      cardPath: card.cover.url!,
-                      onTap: followLink,
-                    )
-                  : PackCardWidget.image(
-                      key: ValueKey(card.id),
-                      cardPath: card.cover.url!,
-                      onTap: followLink,
-                    );
-            },
-          );
+          return card.cover.isVideo
+              ? PackCardWidget.video(
+                  key: ValueKey(card.id),
+                  cardPath: card.cover.toAbsoluteUrl(EnvConfig.mediaBaseUrl),
+                  onTap: () => showCardPreviewDialog(
+                    context: context,
+                    card: card,
+                    rankCount: cardRankCount,
+                  ),
+                )
+              : PackCardWidget.image(
+                  key: ValueKey(card.id),
+                  cardPath: card.cover.toAbsoluteUrl(EnvConfig.mediaBaseUrl),
+                  onTap: () => showCardPreviewDialog(
+                    context: context,
+                    card: card,
+                    rankCount: cardRankCount,
+                  ),
+                );
         },
       ),
     );

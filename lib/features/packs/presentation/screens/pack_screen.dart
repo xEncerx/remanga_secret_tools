@@ -118,7 +118,7 @@ class PackScreen extends StatelessWidget implements AutoRouteWrapper {
                 ),
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  sliver: PackSliverGrid(cards: state.packData.cards),
+                  sliver: PackSliverGrid(pack: state.packData),
                 ),
               ],
             );

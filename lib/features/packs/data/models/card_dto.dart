@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'models.dart';
-
 part 'card_dto.freezed.dart';
 part 'card_dto.g.dart';
 
@@ -31,10 +29,13 @@ abstract class CardDTO with _$CardDTO {
     /// Indicates if the card can be upgraded.
     required bool isUpgradable,
 
-    /// [CoverDTO] representing the card's cover images.
-    required CoverDTO cover,
-  }) = _CoverDTO;
+    /// Count of encounters associated with the card.
+    required int encounterCount,
+
+    /// Cover image URL of the card.
+    required String cover,
+  }) = _CardDTO;
 
   /// Creates a [CardDTO] from a JSON map.
-  factory CardDTO.fromJson(Map<String, dynamic> json) => _$CoverDTOFromJson(json);
+  factory CardDTO.fromJson(Map<String, dynamic> json) => _$CardDTOFromJson(json);
 }

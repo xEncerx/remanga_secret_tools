@@ -12,7 +12,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration {
@@ -21,7 +21,13 @@ class AppDatabase extends _$AppDatabase {
         await m.createAll();
       },
       onUpgrade: (Migrator m, int from, int to) async {
-        // Maybe will add migrations later
+        // Perform migration from version 1 to 2
+        if (from == 1 && to == 2) {
+          await customStatement(
+            // ignore: lines_longer_than_80_chars
+            "ALTER TABLE cards ADD COLUMN encounter_count JSONB NOT NULL DEFAULT '{}'::jsonb",
+          );
+        }
       },
     );
   }

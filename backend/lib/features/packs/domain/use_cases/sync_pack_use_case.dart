@@ -122,7 +122,7 @@ class SyncPackUseCase {
         final coverOriginalUrl = card.cover.high ?? card.cover.mid ?? '';
 
         await cardRepository.upsert(
-          CardsDbModelData(
+          card: CardsDbModelData(
             id: card.id,
             description: HtmlCleaner.clean(card.description),
             score: card.score,
@@ -130,11 +130,13 @@ class SyncPackUseCase {
             power: card.power,
             hasAudio: card.hasAudio,
             isUpgradable: card.isUpgradable,
+            encounterCount: const CardEncounterCount(),
             coverOriginalUrl: coverOriginalUrl,
             coverLocalPath: _generateLocalPath(coverOriginalUrl),
             coverStatus: DownloadStatus.pending,
             updatedAt: PgDateTime(DateTime.now()),
           ),
+          packId: pack.id,
         );
         cardIds.add(card.id);
       }

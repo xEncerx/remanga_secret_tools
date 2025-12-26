@@ -12,8 +12,8 @@ abstract class CardRepository {
     int? limit,
   });
 
-  /// Counts cards grouped by their rank.
-  Future<Map<CardRankEnum, int>> countCardsByRank();
+  /// Counts cards grouped by their rank in a specific pack.
+  Future<Map<CardRankEnum, int>> countCardsByRank(int packId);
 
   /// Upserts a card into the database.
   Future<void> upsert({required CardsDbModelData card, required int packId});

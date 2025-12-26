@@ -24,7 +24,7 @@ class GetPackUseCase {
     final (pack, cards) = result;
     final packKey = CardEncounterCount.getKeyById(packId);
 
-    final rankCounts = await cardRepository.countCardsByRank();
+    final rankCounts = await cardRepository.countCardsByRank(packId);
 
     return PackResponse(
       id: pack.id,

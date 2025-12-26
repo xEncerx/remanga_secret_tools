@@ -89,7 +89,10 @@ class InjectionContainer {
         ),
       )
       ..registerSingleton<GetPackUseCase>(
-        GetPackUseCase(packRepo),
+        GetPackUseCase(
+          packRepository: packRepo,
+          cardRepository: cardRepo,
+        ),
       );
 
     logger.info('Dependency injection container initialized.');

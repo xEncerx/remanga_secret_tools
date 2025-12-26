@@ -1,3 +1,4 @@
+export 'card_encounter_count.dart';
 export 'card_entity.dart';
 export 'card_rank_enum.dart';
 export 'cover_entity.dart';

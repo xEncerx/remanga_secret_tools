@@ -23,7 +23,6 @@ class PackSliverGrid extends StatelessWidget {
         childCount: pack.cards.length,
         (context, index) {
           final card = pack.cards[index];
-          final cardRankCount = (pack.packRankCounts.toJson()[card.rank] as int?) ?? 0;
 
           return card.cover.isVideo
               ? PackCardWidget.video(
@@ -32,7 +31,7 @@ class PackSliverGrid extends StatelessWidget {
                   onTap: () => showCardPreviewDialog(
                     context: context,
                     card: card,
-                    rankCount: cardRankCount,
+                    packGeneration: pack.generation,
                   ),
                 )
               : PackCardWidget.image(
@@ -41,7 +40,7 @@ class PackSliverGrid extends StatelessWidget {
                   onTap: () => showCardPreviewDialog(
                     context: context,
                     card: card,
-                    rankCount: cardRankCount,
+                    packGeneration: pack.generation,
                   ),
                 );
         },

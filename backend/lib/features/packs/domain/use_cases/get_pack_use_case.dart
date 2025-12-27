@@ -52,6 +52,7 @@ class GetPackUseCase {
         rankE: rankCounts[CardRankEnum.rank_e] ?? 0,
         rankF: rankCounts[CardRankEnum.rank_f] ?? 0,
       ),
+      generation: pack.generation,
       cost: pack.cost,
       dir: pack.dir,
       amount: pack.amount,

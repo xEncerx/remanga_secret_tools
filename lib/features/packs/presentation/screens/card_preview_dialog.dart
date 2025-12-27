@@ -9,13 +9,13 @@ import '../../../features.dart';
 Future<void> showCardPreviewDialog({
   required BuildContext context,
   required CardDTO card,
-  int rankCount = 0,
+  int packGeneration = 0,
 }) {
   return showDialog(
     context: context,
     builder: (context) => CardPreviewDialog(
       card: card,
-      rankCount: rankCount,
+      packGeneration: packGeneration,
     ),
   );
 }
@@ -26,18 +26,18 @@ class CardPreviewDialog extends StatelessWidget {
   const CardPreviewDialog({
     super.key,
     required this.card,
-    required this.rankCount,
+    required this.packGeneration,
   });
 
   /// The card data to preview.
   final CardDTO card;
 
-  /// The rank count of the card.
-  final int rankCount;
+  /// Shows how many times the pack has been updated
+  final int packGeneration;
 
   @override
   Widget build(BuildContext context) {
-    final dropRate = rankCount > 0 ? (card.encounterCount / rankCount * 100) : 0.0;
+    final dropRate = packGeneration > 0 ? (card.encounterCount / packGeneration * 100) : 0.0;
 
     return Dialog(
       backgroundColor: Colors.transparent,
@@ -141,13 +141,13 @@ class _CardPreviewDetail extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Эта карта появляется с вероятностью в ${dropRate.toStringAsFixed(1)}%*',
+                  'Шанс появления: ${dropRate.toStringAsFixed(1)}%*',
                   style: theme.textTheme.bodyLarge.ellipsis,
                   maxLines: 2,
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  '* Вероятность рассчитывается на основе количества раз, когда карта появлялась в паке в сравнении с общим количеством карт этого ранга.',
+                  '* Шанс показывает, как часто карта попадала в колоду за всё время моих наблюдений.',
                   style: theme.textTheme.bodyMedium.withColor(theme.hintColor).ellipsis,
                   maxLines: 4,
                   textAlign: TextAlign.center,

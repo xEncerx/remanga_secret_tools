@@ -36,6 +36,9 @@ abstract class PackResponse with _$PackResponse {
     /// Rank counts of the cards in the pack.
     required PackRankCountsResponse packRankCounts,
 
+    /// Shows how many times the pack has been updated
+    required int generation,
+
     /// Cost of the pack.
     required int cost,
 

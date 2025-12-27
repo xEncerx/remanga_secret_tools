@@ -16,6 +16,9 @@ abstract class PackDTO with _$PackDTO {
     /// Name of the pack.
     required String name,
 
+    /// Shows how many times the pack has been updated
+    required int generation,
+
     /// Cost of the pack.
     required int cost,
 

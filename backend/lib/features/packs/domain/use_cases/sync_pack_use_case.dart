@@ -109,6 +109,7 @@ class SyncPackUseCase {
           isActive: pack.isActive,
           type: pack.type,
           guarantors: pack.guarantors,
+          generation: 1,
           cost: pack.cost,
           dir: pack.dir,
           amount: pack.amount,

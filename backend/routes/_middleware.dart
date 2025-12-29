@@ -22,7 +22,7 @@ Handler middleware(Handler handler) {
         cacheMiddlewareByEndpoint(
           endpointConfigs: {
             '/api/v1/packs/*': const CacheConfig(
-              duration: Duration(seconds: 40),
+              duration: Duration(seconds: 15),
               keyPrefix: 'packs_endpoint',
             ),
           },

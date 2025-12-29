@@ -141,7 +141,7 @@ class _CardPreviewDetail extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Шанс появления: ${dropRate.toStringAsFixed(1)}%*',
+                  'Шанс появления: ${dropRate.toStringAsFixed(2)}%*',
                   style: theme.textTheme.bodyLarge.ellipsis,
                   maxLines: 2,
                   textAlign: TextAlign.center,

@@ -18,7 +18,6 @@ Handler middleware(Handler handler) {
       )
       .use(sentryTransactionMiddleware())
       .use(errorCatcherMiddleware())
-      .use(requestLogger())
       .use(
         cacheMiddlewareByEndpoint(
           endpointConfigs: {
@@ -29,5 +28,6 @@ Handler middleware(Handler handler) {
           },
         ),
       )
-      .use(rateLimitMiddleware);
+      .use(rateLimitMiddleware)
+      .use(requestLoggerMiddleware());
 }

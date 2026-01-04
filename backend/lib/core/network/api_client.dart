@@ -1,3 +1,4 @@
+import 'package:backend/core/utils/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:talker/talker.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
@@ -9,6 +10,7 @@ class ApiClient {
     required this.baseUrl,
     required this.logger,
     this.headers,
+    this.proxy,
   });
 
   /// Logger instance for logging API client activities.
@@ -19,6 +21,9 @@ class ApiClient {
 
   /// Default headers for the API requests.
   final Map<String, dynamic>? headers;
+
+  /// Proxy URL for the API requests.
+  final String? proxy;
 
   /// Creates and configures a Dio HTTP client.
   Dio createClient() {
@@ -49,6 +54,14 @@ class ApiClient {
             },
       ),
     );
+
+    // Setup proxy if provided
+    if (proxy != null && proxy!.isNotEmpty) {
+      final proxyConfig = ProxyConfig.fromString(proxy!);
+      if (proxyConfig != null) {
+        dio.setupProxy(proxyConfig);
+      }
+    }
 
     dio.interceptors.addAll(<Interceptor>[
       TalkerDioLogger(

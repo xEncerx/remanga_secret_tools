@@ -45,6 +45,10 @@ class EnvConfig {
   static String get apiRemangaUrl =>
       _dotenv['API_REMANGA_URL'] ?? 'https://api.remanga.org';
 
+  // === Proxy configuration. ===
+  /// The proxy URL for outbound requests.
+  static String? get proxy => _dotenv['PROXY'];
+
   // === Logging configuration parameters. ===
   /// The Sentry DSN for error tracking.
   static String? get sentryDsn => _dotenv['SENTRY_DSN'];

@@ -35,6 +35,7 @@ class InjectionContainer {
       ApiClient(
         baseUrl: '${EnvConfig.apiRemangaUrl}/api/v2/',
         logger: logger,
+        proxy: EnvConfig.proxy,
       ).createClient(),
     );
 
@@ -76,6 +77,7 @@ class InjectionContainer {
           dio: ApiClient(
             baseUrl: EnvConfig.apiRemangaUrl,
             logger: logger,
+            proxy: EnvConfig.proxy,
           ).createClient(),
           cardRepository: cardRepo,
           fileStorage: LocalFileStorage(basePath: EnvConfig.mediaRoot),

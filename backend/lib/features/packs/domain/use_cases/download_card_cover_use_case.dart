@@ -15,7 +15,7 @@ class DownloadCardCoverUseCase {
     required this.fileStorage,
   });
 
-  /// Dio instance for making HTTP requests.
+  /// REST client for making network requests.
   final RestClient restClient;
 
   /// Card repository for database operations.

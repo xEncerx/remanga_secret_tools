@@ -33,7 +33,7 @@ class InjectionContainer {
     // === Configure REST client ===
     final restClient = RestClient(
       ApiClient(
-        baseUrl: '${EnvConfig.apiRemangaUrl}/api/v2/',
+        baseUrl: EnvConfig.apiRemangaUrl,
         logger: logger,
         proxy: EnvConfig.proxy,
       ).createClient(),
@@ -74,11 +74,7 @@ class InjectionContainer {
       )
       ..registerSingleton<DownloadCardCoverUseCase>(
         DownloadCardCoverUseCase(
-          dio: ApiClient(
-            baseUrl: EnvConfig.apiRemangaUrl,
-            logger: logger,
-            proxy: EnvConfig.proxy,
-          ).createClient(),
+          restClient: restClient,
           cardRepository: cardRepo,
           fileStorage: LocalFileStorage(basePath: EnvConfig.mediaRoot),
         ),

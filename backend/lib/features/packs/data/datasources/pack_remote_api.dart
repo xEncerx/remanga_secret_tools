@@ -8,7 +8,7 @@ import 'package:retrofit/retrofit.dart';
 part 'pack_remote_api.g.dart';
 
 /// Remote API for fetching pack data.
-@RestApi(baseUrl: 'shop/decks', callAdapter: EitherCallAdapter)
+@RestApi(baseUrl: '/api/v2/shop/decks', callAdapter: EitherCallAdapter)
 // ignore: one_member_abstracts
 abstract class PackRemoteApi {
   /// Creates a new instance of [PackRemoteApi].

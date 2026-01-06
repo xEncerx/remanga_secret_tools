@@ -19,9 +19,17 @@ class AppDatabase extends _$AppDatabase {
     return MigrationStrategy(
       onCreate: (Migrator m) async {
         await m.createAll();
+
+        await customStatement(
+          'CREATE INDEX IF NOT EXISTS idx_cards_rank ON cards(rank)',
+        );
+        await customStatement(
+          // ignore: lines_longer_than_80_chars
+          'CREATE INDEX IF NOT EXISTS idx_cards_encounter_count ON cards USING GIN (encounter_count)',
+        );
       },
       onUpgrade: (Migrator m, int from, int to) async {
-        // Maybe will add migrations later
+        // Handle database migrations here when schemaVersion is increased.
       },
     );
   }

@@ -24,18 +24,22 @@ class EitherCallAdapter<T>
           final apiException = ApiException.fromJson(errorData);
           return Left(apiException);
         } catch (_) {
-          return Left(
-            ApiException(
-              detail: ApiExceptionDetail(
-                message: dioError.message ?? 'Unknown error',
-                code: statusCode,
-              ),
-            ),
-          );
+          return _buildUnknownError(dioError);
         }
       } else {
-        return Left(ApiException.internalServerError());
+        return _buildUnknownError(dioError);
       }
     }
+  }
+
+  Left<ApiException, T> _buildUnknownError(DioException dioError) {
+    return Left(
+      ApiException(
+        detail: ApiExceptionDetail(
+          message: dioError.message ?? 'Unknown error',
+          code: dioError.response?.statusCode ?? 500,
+        ),
+      ),
+    );
   }
 }

@@ -1,13 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'card_dto.freezed.dart';
-part 'card_dto.g.dart';
+part 'card_response.freezed.dart';
+part 'card_response.g.dart';
 
-/// DTO representing a card with various attributes.
+/// Response model representing a card with various attributes.
 @freezed
-abstract class CardDTO with _$CardDTO {
-  /// Factory constructor for [CardDTO].
-  const factory CardDTO({
+abstract class CardResponse with _$CardResponse {
+  /// Factory constructor for [CardResponse].
+  const factory CardResponse({
     /// Unique identifier for the card.
     required int id,
 
@@ -34,8 +34,9 @@ abstract class CardDTO with _$CardDTO {
 
     /// Cover image URL of the card.
     required String cover,
-  }) = _CardDTO;
+  }) = _CardResponse;
 
-  /// Creates a [CardDTO] from a JSON map.
-  factory CardDTO.fromJson(Map<String, dynamic> json) => _$CardDTOFromJson(json);
+  /// Creates a [CardResponse] from a JSON map.
+  factory CardResponse.fromJson(Map<String, dynamic> json) =>
+      _$CardResponseFromJson(json);
 }

@@ -16,6 +16,9 @@ abstract class PackDTO with _$PackDTO {
     /// Name of the pack.
     required String name,
 
+    /// Shows how many times the pack has been updated
+    required int generation,
+
     /// Cost of the pack.
     required int cost,
 
@@ -39,6 +42,9 @@ abstract class PackDTO with _$PackDTO {
 
     /// [PackGuarantorsDTO] representing the pack's guarantors.
     required PackGuarantorsDTO guarantors,
+
+    /// [PackRankCountsDto] representing the counts of different card ranks in the pack.
+    required PackRankCountsDTO packRankCounts,
 
     /// List of [CardDTO] representing the cards in the pack.
     required List<CardDTO> cards,

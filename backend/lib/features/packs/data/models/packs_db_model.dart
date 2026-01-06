@@ -42,6 +42,9 @@ class PacksDbModel extends Table {
     ),
   )();
 
+  /// Shows how many times the pack has been updated
+  IntColumn get generation => integer().withDefault(const Constant(1))();
+
   /// Cost of the pack.
   IntColumn get cost => integer()();
 

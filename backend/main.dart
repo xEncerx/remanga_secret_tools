@@ -6,6 +6,8 @@ import 'package:backend/features/features.dart';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:sentry/sentry.dart';
 
+HttpServer? _server;
+
 /// Initializes dependencies before the server starts.
 Future<void> init(InternetAddress ip, int port) async {
   await Sentry.init((options) {
@@ -37,7 +39,9 @@ Future<void> init(InternetAddress ip, int port) async {
       ProcessSignal.sigint.watch().listen((_) async {
         await SchedulerManager.stopAll();
         await InjectionContainer.dispose();
+        await _server?.close(force: true);
         await Sentry.close();
+        exit(0);
       });
     },
     (error, stackTrace) async {

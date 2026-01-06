@@ -49,7 +49,19 @@ class PackRepositoryImpl implements PackRepository {
 
   @override
   Future<void> upsert(PacksDbModelData pack) async {
-    await database.into(database.packsDbModel).insertOnConflictUpdate(pack);
+    await database
+        .into(database.packsDbModel)
+        .insert(
+          pack,
+          onConflict: DoUpdate(
+            (_) => PacksDbModelCompanion.custom(
+              generation: const CustomExpression('packs.generation + 1'),
+              packHash: Variable(pack.packHash),
+              updatedAt: const CustomExpression('NOW()'),
+            ),
+            target: [database.packsDbModel.id],
+          ),
+        );
   }
 
   @override

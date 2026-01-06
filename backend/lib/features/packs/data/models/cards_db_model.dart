@@ -1,3 +1,4 @@
+import 'package:backend/database/database.dart';
 import 'package:backend/features/features.dart';
 import 'package:drift/drift.dart';
 import 'package:drift_postgres/drift_postgres.dart';
@@ -27,6 +28,14 @@ class CardsDbModel extends Table {
 
   /// Indicates if the card can be upgraded.
   BoolColumn get isUpgradable => boolean()();
+
+  /// Count of encounters associated with the card.
+  Column<Object> get encounterCount => customType(PgTypes.jsonb).map(
+    JsonBTypeConverter<CardEncounterCount>(
+      CardEncounterCount.fromJson,
+      (count) => count.toJson(),
+    ),
+  )();
 
   /// URL for the original cover image of the card.
   TextColumn get coverOriginalUrl => text()();

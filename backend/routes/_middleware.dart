@@ -18,16 +18,16 @@ Handler middleware(Handler handler) {
       )
       .use(sentryTransactionMiddleware())
       .use(errorCatcherMiddleware())
-      .use(requestLogger())
       .use(
         cacheMiddlewareByEndpoint(
           endpointConfigs: {
             '/api/v1/packs/*': const CacheConfig(
-              duration: Duration(seconds: 40),
+              duration: Duration(seconds: 15),
               keyPrefix: 'packs_endpoint',
             ),
           },
         ),
       )
-      .use(rateLimitMiddleware);
+      .use(rateLimitMiddleware)
+      .use(requestLoggerMiddleware());
 }

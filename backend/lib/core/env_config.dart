@@ -4,7 +4,8 @@ import 'package:dotenv/dotenv.dart';
 
 /// A class to manage environment configurations using dotenv.
 class EnvConfig {
-  static final _dotenv = DotEnv()..load();
+  static final _dotenv = DotEnv(includePlatformEnvironment: true, quiet: true)
+    ..load();
 
   /// The current environment flavor.
   static EnvFlavor get flavor =>
@@ -44,6 +45,10 @@ class EnvConfig {
   /// The API url of Remanga.
   static String get apiRemangaUrl =>
       _dotenv['API_REMANGA_URL'] ?? 'https://api.remanga.org';
+
+  // === Proxy configuration. ===
+  /// The proxy URL for outbound requests.
+  static String? get proxy => _dotenv['PROXY'];
 
   // === Logging configuration parameters. ===
   /// The Sentry DSN for error tracking.

@@ -10,7 +10,12 @@ class RestClient {
   final Dio dio;
 
   PackRemoteApi? _packRemoteApi;
+  FileRemoteDatasource? _fileRemoteDatasource;
 
   /// Provides access to the [PackRemoteApi].
   PackRemoteApi get packs => _packRemoteApi ??= PackRemoteApi(dio);
+
+  /// Provides access to the [FileRemoteDatasource].
+  FileRemoteDatasource get files =>
+      _fileRemoteDatasource ??= FileRemoteDatasource(dio);
 }

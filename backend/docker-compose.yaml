@@ -11,7 +11,7 @@ services:
     volumes:
       - ${MEDIA_ROOT:-./media}:/var/www/rst-media
 
-  rst-redis:
+  redis:
     container_name: rst-redis
     image: redis:alpine
     command: redis-server --requirepass ${REDIS_PASSWORD}

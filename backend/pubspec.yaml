@@ -1,6 +1,6 @@
 name: backend
 description: Backend service for Remanga Secret Tools, aggregating data and powering unofficial features for the Remanga ecosystem.
-version: 0.3.3
+version: 0.3.4
 publish_to: none
 
 environment:
@@ -23,6 +23,7 @@ dependencies:
   postgres: ^3.5.9
   redis: ^4.0.0
   retrofit: ^4.9.2
+  retry: ^3.1.2
   sentry: ^9.9.1
   shelf: ^1.4.2
   shelf_cors_headers: ^0.1.5

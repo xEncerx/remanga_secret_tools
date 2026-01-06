@@ -4,7 +4,7 @@ import 'package:dotenv/dotenv.dart';
 
 /// A class to manage environment configurations using dotenv.
 class EnvConfig {
-  static final _dotenv = DotEnv()..load();
+  static final _dotenv = DotEnv(includePlatformEnvironment: true)..load();
 
   /// The current environment flavor.
   static EnvFlavor get flavor =>
